@@ -30,3 +30,17 @@ def proxy_list():
     dt = { 'status' : 200, 'data' : lt }
     return json.dumps(dt)
 
+@app.route('/fast')
+def fast_proxy_list():
+    docs = db.proxy.find({'time': {'$lt': 0.1 } })
+    lt = [doc['ip_port'] for doc in docs]
+    dt = { 'status' : 200, 'data' : lt }
+    return json.dumps(dt)
+
+@app.route('/best')
+def best_proxy_list():
+    docs = db.proxy.find().sort('time',1).limit(1)
+    lt = [doc['ip_port'] for doc in docs]
+    dt = { 'status' : 200, 'data' : lt }
+    return json.dumps(dt)
+

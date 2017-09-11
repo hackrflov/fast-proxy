@@ -13,8 +13,12 @@ PROXY_SITES_BY_REGX = {
     'urls': [
         'http://ab57.ru/downloads/proxyold.txt',
         'http://www.proxylists.net/http_highanon.txt',
-        'https://www.rmccurdy.com/scripts/proxy/good.txt',
         'http://www.proxylists.net/?HTTP',
+        'https://www.rmccurdy.com/scripts/proxy/good.txt',
+        'http://www.site-digger.com/html/articles/20110516/proxieslist.html',
+        'http://ip.baizhongsou.com',
+        'https://raw.githubusercontent.com/opsxcq/proxy-list/master/list.txt',
+        'https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list.txt',
     ],
     'proxy_regx': r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{2,4}"
 }
@@ -22,31 +26,50 @@ PROXY_SITES_BY_REGX = {
 # 需要利用xpath 定位代理IP 的站点
 PROXY_SITES_BY_XPATH = [
     {
-        'urls': ['http://www.66ip.cn/{}.html'.format(pn) for pn in range(1, 11)],
+        'urls': ['http://www.66ip.cn/{}.html'.format(pn) for pn in range(1,21)],
         'ip_xpath': ".//*[@id='main']/div/div[1]/table/tr[position()>1]/td[1]/text()" ,
         'port_xpath': ".//*[@id='main']/div/div[1]/table/tr[position()>1]/td[2]/text()"
     },
     {
-        'urls': ['http://www.mimiip.com/gngao/{}'.format(pn) for pn in range(1, 11)],
+        'urls': ['http://www.mimiip.com/gngao/{}'.format(pn) for pn in range(1,21)],
         'ip_xpath': ".//table[@class='list']/tbody/tr/td[1]/text()",
         'port_xpath': ".//table[@class='list']/tbody/tr/td[2]/text()"
     },
     {
-        'urls' : ['http://www.xicidaili.com/nn/{}'.format(pn) for pn in range(1,11)],
+        'urls' : ['http://www.xicidaili.com/nn/{}'.format(pn) for pn in range(1,21)],
         'ip_xpath' : '//table[@id="ip_list"]//tr[position()>1]/td[position()=2]/text()',
         'port_xpath' : '//table[@id="ip_list"]//tr[position()>1]/td[position()=3]/text()'
     },
     {
-        'urls' : ['http://www.kuaidaili.com/free/inha/{}/'.format(pn) for pn in range(1,11)],
+        'urls' : ['http://www.kuaidaili.com/free/inha/{}/'.format(pn) for pn in range(1,21)],
         'ip_xpath' : '//td[@data-title="IP"]/text()',
         'port_xpath' : '//td[@data-title="PORT"]/text()'
     },
+    {
+        'urls' : ['http://proxysockslist.com/proxy-in-CHINA-page-1'],
+        'ip_xpath' : '//tr/*[1]/text()',
+        'port_xpath' : '//tr/*[2]/text()'
+    },
+    {
+        'urls' : ['https://free-proxy-list.com/?page={}'.format(pn) for pn in range(1,6)],
+        'ip_xpath' : '//tr/*[1]/a/text()',
+        'port_xpath' : '//tr/*[3]/text()'
+    },
+    {
+        'urls' : ['http://www.kxdaili.com/dailiip/1/{}.html#ip'.format(pn) for pn in range(1,11)],
+        'ip_xpath' : '//tr/*[1]/text()',
+        'port_xpath' : '//tr/*[2]/text()'
+    },
 ]
 
-CHECK_PROXY_XPATH = {
-    "HTTP_VIA": ".//li[@class='proxdata'][1]/span/text()",
-    "HTTP_X_FORWARDED_FOR": ".//li[@class='proxdata'][2]/span/text()"
-}
+# 需要分行处理的TXT格式
+PROXY_SITES_BY_TXT = [
+    {
+        'urls' : ['https://raw.githubusercontent.com/fate0/proxylist/master/proxy.list'],
+        'ip_path' : 'host',
+        'port_path' : 'port'
+    },
+]
 
 # User-Agent list
 USER_AGENT_LIST = [
@@ -63,17 +86,17 @@ USER_AGENT_LIST = [
 ]
 
 
-# 超时时间
-TIME_OUT = 4
+# 爬代理超时时间
+CRAWL_TIMEOUT = 10
+
+# 测试代理超时时间
+TEST_TIMEOUT = 0.50
 
 #重试次数
-RETRY_NUM = 3
-
-#代理最慢时间限制
-PROXY_TIME_LIMIT = 0.20
+RETRY_NUM = 1
 
 # 目标URL
-TARGET_URL = "https://api.bilibili.com/x/v2/fav/video?vmid=32312072&fid=30423962"
+TARGET_URL = "http://api.bilibili.com/x/v2/fav/video?vmid=32312072&fid=30423962"
 
 # 数据库
 MONGO_SETTINGS = {
