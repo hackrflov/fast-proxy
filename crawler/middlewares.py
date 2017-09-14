@@ -18,7 +18,14 @@ class RandomUserAgentMiddleware(object):
         request.headers["User-Agent"] = random.choice(st.USER_AGENTS)
 
     def process_exception(self, request, exception, spider):
-        return scrapy.http.Response(url=request.url, body='Error')
+        request.meta['exception'] = exception
+        return scrapy.http.Response(url=request.url, request=request, body='Error')
 
+    def process_response(self, request, response, spider):
+        if response.status != 200:
+            request.meta['exception'] = Exception('StatusError')
+            return scrapy.http.Response(url=request.url, request=request, body='Error')
+        else:
+            return response
 
 

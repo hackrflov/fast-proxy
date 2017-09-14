@@ -54,7 +54,10 @@ CRAWL_TIMEOUT = 300
 DOWNLOAD_TIMEOUT = 0.5
 
 # Max response time for each proxy
-PROXY_LIMIT_LATENCY = 0.5
+UPDATE_TIMEOUT = 0.2
+
+# Max ace record times
+MAX_ACE_TIMES = 1000
 
 # Url for proxy testing
 TEST_URL = "http://api.bilibili.com/x/v2/fav/video?vmid=32312072&fid=30423962"
